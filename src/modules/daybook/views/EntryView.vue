@@ -26,15 +26,15 @@
       <textarea v-model="entry.text" placeholder="¿Qué sucedió hoy?"></textarea>
     </div>
   </template>
-  
-  <Fab icon="fa-save" />
+
+  <Fab icon="fa-save" @on:click="saveEntry"/>
 
   <img src="https://picsum.photos/800" alt="entry-picture" class="img-thumbnail">
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import getDayMonthYear from '@/modules/daybook/helpers/getDayMonthYear'
 
@@ -72,14 +72,37 @@ export default {
       const { yearDay } = getDayMonthYear(this.entry.date)
 
       return yearDay
-    },
+    }
   },
   methods: {
+    ...mapActions('journal', ['createEntry', 'updateEntry']),
     loadEntry() {
-      const entry = this.getEntryById(this.id)
-      if (!entry) return this.$router.push({ name: 'no-entry' })
+      let entry
+
+      if (this.id === 'new') {
+        entry = {
+          text: '',
+          date: new Date().getTime()
+        }
+      } else {
+        entry = this.getEntryById(this.id)
+        if (!entry) return this.$router.push({ name: 'no-entry' })
+      }
 
       this.entry = entry
+    },
+    async saveEntry() {
+      if (this.entry.id) {
+        // Actualizar
+        await this.updateEntry(this.entry)
+      } else {
+        // Crear nueva entrada
+        console.log(`Post de una nueva entrada`)
+
+        const newEntryId = await this.createEntry(this.entry)
+
+        return this.$router.push({ name: 'entry', params: { id: newEntryId }})
+      }
     }
   },
   created() {

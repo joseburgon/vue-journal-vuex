@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar bg-primary">
-    <a href="" class="navbar-brand text-white">
+    <span @click="$router.push({ name: 'daybook' })" class="navbar-brand text-white pointer">
       <img
           src="@/assets/logo.png"
           alt="Vue Logo"
@@ -8,7 +8,7 @@
           class="d-inline-block align-text-top mx-2"
       >
       Daybook
-    </a>
+    </span>
 
     <div class="d-flex">
       <button class="btn btn-outline-info mx-2">
@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: "DaybookNavbar",
+  name: "DaybookNavbar"
 }
 </script>
