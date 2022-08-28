@@ -22,7 +22,7 @@
             @click="onDeleteEntry"
             class="btn btn-danger mx-2"
         >
-          Borrar
+          Delete
           <i class="fa fa-trash-alt"></i>
         </button>
 
@@ -30,7 +30,7 @@
             @click="onSelectImage"
             class="btn btn-primary mx-2"
         >
-          Subir foto
+          Upload Picture
           <i class="fa fa-upload"></i>
         </button>
       </div>

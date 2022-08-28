@@ -3,7 +3,6 @@
     <div class="entry-title d-flex">
       <span class="text-success fs-5 fw-bold">{{ day }}</span>
       <span class="mx-1 fs-5">{{ month }}</span>
-      <span class="mx-2 fw-light">{{ yearDay }}</span>
     </div>
 
     <div class="entry-description">
@@ -13,8 +12,7 @@
 </template>
 
 <script>
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+import getDayMonthYear from '@/modules/daybook/helpers/getDayMonthYear'
 
 export default {
   name: 'DaybookEntry',
@@ -31,19 +29,20 @@ export default {
           : this.entry.text
     },
     day() {
-      const date = new Date(this.entry.date)
+      const { day } = getDayMonthYear(this.entry.date)
 
-      return date.getDate()
+      return day
     },
     month() {
-      const date = new Date(this.entry.date)
+      const { month } = getDayMonthYear(this.entry.date)
 
-      return months[date.getMonth()]
+      return month
     },
     yearDay() {
-      const date = new Date(this.entry.date)
+      console.log(this.entry.date)
+      const { day, year } = getDayMonthYear(this.entry.date)
 
-      return `${date.getFullYear()}, ${days[date.getDay()]}`
+      return `${year}, ${day}`
     }
   }
 }

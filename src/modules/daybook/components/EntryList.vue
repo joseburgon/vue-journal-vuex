@@ -1,7 +1,7 @@
 <template>
   <div class="entry-list-container">
     <div class="p-2">
-      <input v-model="term" type="text" name="" id="" class="form-control" placeholder="Buscar entrada">
+      <input v-model="term" type="text" name="" id="" class="form-control" placeholder="Search Entry">
     </div>
 
     <div class="mt-2 d-flex flex-column">
@@ -10,7 +10,7 @@
           class="btn btn-primary mx-3"
       >
         <i class="fa fa-plus-circle"></i>
-         Nueva Entrada
+         New Entry
       </button>
     </div>
 
