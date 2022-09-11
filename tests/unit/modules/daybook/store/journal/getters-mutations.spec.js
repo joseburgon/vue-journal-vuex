@@ -21,6 +21,37 @@ describe('Vuex - Journal Module Tests', () => {
     expect(entries).toEqual(journalState.entries)
   })
 
+  // Getters
+  test('getters: getEntriesByTerm getEntryById', () => {
+    const initialState = {
+      isLoading: false,
+      entries: [
+        {
+          id: 'DEF-456',
+          date: 1655424085168,
+          picture: 'https://res.cloudinary.com/joseburgon/image/upload/v1658849965/eageowhybrc6dtj3cvqp.jpg',
+          text: 'Hello world from mock data'
+        },
+        {
+          id: 'GHI-789',
+          date: 1655424085168,
+          picture: 'https://res.cloudinary.com/joseburgon/image/upload/v1658849965/eageowhybrc6dtj3cvqp.jpg',
+          text: 'This is the second entry'
+        }
+      ]
+    }
+
+    const store = createVuexStore(initialState)
+
+    const [entry1, entry2] = initialState.entries
+
+    expect(store.getters['journal/getEntriesByTerm']('').length).toBe(2)
+    expect(store.getters['journal/getEntriesByTerm']('second').length).toBe(1)
+    expect(store.getters['journal/getEntriesByTerm']('second')).toEqual([entry2])
+
+    expect(store.getters['journal/getEntryById']('DEF-456')).toEqual(entry1)
+  })
+
   // Mutations
   test('mutation: setEntries', () => {
     const store = createVuexStore({ isLoading: true, entries: [] })
@@ -53,7 +84,7 @@ describe('Vuex - Journal Module Tests', () => {
   test('mutation: addEntry deleteEntry', () => {
     const store = createVuexStore(journalState)
 
-    store.commit('journal/addEntry', { id: 'ABC-123', text: 'Hello World'})
+    store.commit('journal/addEntry', { id: 'ABC-123', text: 'Hello World' })
 
     const stateEntries = store.state.journal.entries
 
@@ -68,36 +99,5 @@ describe('Vuex - Journal Module Tests', () => {
     expect(
       store.state.journal.entries.some(e => e.id === 'ABC-123')
     ).toBeFalsy()
-  })
-
-  // Getters
-  test('getters: getEntriesByTerm getEntryById', () => {
-    const initialState = {
-      isLoading: false,
-      entries: [
-        {
-          id: 'DEF-456',
-          date: 1655424085168,
-          picture: 'https://res.cloudinary.com/joseburgon/image/upload/v1658849965/eageowhybrc6dtj3cvqp.jpg',
-          text: 'Hello world from mock data'
-        },
-        {
-          id: 'GHI-789',
-          date: 1655424085168,
-          picture: 'https://res.cloudinary.com/joseburgon/image/upload/v1658849965/eageowhybrc6dtj3cvqp.jpg',
-          text: 'This is the second entry'
-        },
-      ]
-    }
-
-    const store = createVuexStore(initialState)
-
-    const [entry1, entry2] = initialState.entries
-
-    expect(store.getters['journal/getEntriesByTerm']('').length).toBe(2)
-    expect(store.getters['journal/getEntriesByTerm']('second').length).toBe(1)
-    expect(store.getters['journal/getEntriesByTerm']('second')).toEqual([entry2])
-
-    expect(store.getters['journal/getEntryById']('DEF-456')).toEqual(entry1)
   })
 })
