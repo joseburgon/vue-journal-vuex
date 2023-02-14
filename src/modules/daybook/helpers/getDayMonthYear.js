@@ -3,6 +3,7 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 
 const getDayMonthYear = (dateString) => {
   const date = new Date(dateString)
+  console.log(`date`, date.getFullYear())
 
   return {
     day: date.getDate(),

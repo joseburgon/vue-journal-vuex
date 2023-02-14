@@ -39,10 +39,9 @@ export default {
       return month
     },
     yearDay() {
-      console.log(this.entry.date)
-      const { day, year } = getDayMonthYear(this.entry.date)
+      const { yearDay } = getDayMonthYear(this.entry.date)
 
-      return `${year}, ${day}`
+      return yearDay
     }
   }
 }
